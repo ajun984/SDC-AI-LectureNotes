@@ -6,7 +6,7 @@
 
 int main(void)
 {
-    const int random_number_count = 1;
+    const int random_number_count = 18;
     const int start = 3;
     const int end = 20;
 

@@ -1,0 +1,1 @@
+void choose_menu(void (**board_menu)(void));

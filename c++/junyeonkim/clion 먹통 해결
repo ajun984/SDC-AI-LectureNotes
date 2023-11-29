@@ -1,0 +1,9 @@
+ps -ef | grep clion
+
+ps -ef
+
+ps -ef | grep clion | grep -v grep
+
+eddi xxxx
+
+kill -9 xxxx

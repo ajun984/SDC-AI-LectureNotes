@@ -26,6 +26,7 @@ int main (void)
     char keyboard_input[MAX_USER_KEYBOARD_INPUT] = { 0 };
     char output_message[MAX_OUTPUT_MESSAGE] = 
     {
+        
         "0번. 게시물 조회\n"
         "1번. 게시물 작성\n"
         "2번. 게시물 삭제\n"

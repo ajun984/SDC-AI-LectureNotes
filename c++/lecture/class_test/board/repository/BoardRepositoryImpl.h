@@ -14,6 +14,8 @@ class BoardRepositoryImpl : public BoardRepository {
 public:
     std::vector<Board> findAll() override;
     Board *save(Board *board) override;
+    std::optional<Board> findById(int boardNo) override;
+    void deleteById(int boardNo) override;
 
     static BoardRepositoryImpl& getInstance();
 };

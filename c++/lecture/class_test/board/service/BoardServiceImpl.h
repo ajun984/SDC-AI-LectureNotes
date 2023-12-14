@@ -22,8 +22,11 @@ private:
 
 public:
     BoardServiceImpl(std::shared_ptr<BoardRepository> boardRepository);
-    std::vector<BoardRegisterResponse> list() override;
+    std::vector<BoardListResponseForm> list() override;
     BoardRegisterResponse *create(BoardRegisterRequest *request) override;
+    BoardReadResponse *read(int boardNo) override;
+    BoardReadResponseForm *modify(BoardModifyRequest *request) override;
+    void remove(int boardNo) override;
 };
 
 

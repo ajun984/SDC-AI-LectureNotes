@@ -41,6 +41,10 @@ void Board::printBoardInfo() const {
         << ", Updated At: " << std::chrono::system_clock::to_time_t(updated_at) << std::endl;
 }
 
+const int &Board::getId() const {
+    return id;
+}
+
 const std::string &Board::getTitle() const {
     return title;
 }
@@ -51,4 +55,16 @@ const std::string &Board::getWriter() const {
 
 const std::string &Board::getContent() const {
     return content;
+}
+
+void Board::setTitle(const std::string &title) {
+    Board::title = title;
+}
+
+void Board::setContent(const std::string &content) {
+    Board::content = content;
+}
+
+void Board::setId(int id) {
+    Board::id = id;
 }

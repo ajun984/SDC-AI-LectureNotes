@@ -1,15 +1,35 @@
 import socket
 from time import sleep
 
+from server_socket.entity.ClientSocket import ClientSocket
 from server_socket.entity.ServerSocket import ServerSocket
 from server_socket.repository.ServerSocketRepository import ServerSocketRepository
+
+
 class ServerSocketRepositoryImpl(ServerSocketRepository):
+    __instance = None
+    __clientSocketList = []
+
+    def __new__(cls):
+        if cls.__instance is None:
+            cls.__instance = super().__new__(cls)
+        return cls.__instance
+
     def __init__(self):
+        print("ServerSocketRepositoryImpl 생성자 호출")
         self.__serverSocket = None
+
+    @classmethod
+    def getInstance(cls):
+        if cls.__instance is None:
+            cls.__instance = cls()
+        return cls.__instance
+
     def create(self, host, port):
         socketObject = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__serverSocket = ServerSocket(host, port, socketObject)
         return self.__serverSocket
+
     # 실제로는 SOL_SOCKET, SO_REUSEADDR이 들어오므로
     # IP 및 PORT를 지속적으로 재사용 함을 의미하나
     # 추후 확장에서 다른 옵션들도 활용 될 수 있으므로 아래와 같이 구성함
@@ -38,6 +58,9 @@ class ServerSocketRepositoryImpl(ServerSocketRepository):
             serverSocketObject = self.__serverSocket.getSocket()
             clientSocket, clientAddress = serverSocketObject.accept()
             print(f"사용자가 접속했습니다: {clientAddress}")
+
+            self.__clientSocketList.append(ClientSocket(clientSocket, clientAddress))
+
             return clientSocket, clientAddress
 
         except BlockingIOError:
@@ -52,3 +75,9 @@ class ServerSocketRepositoryImpl(ServerSocketRepository):
         except Exception as exception:
             print(f"사용자 승인 중 에러 발생: {exception}")
             return None, None
+
+    def getServerSocket(self):
+        return self.__serverSocket
+
+    def getClientSocketList(self):
+        return self.__clientSocketList

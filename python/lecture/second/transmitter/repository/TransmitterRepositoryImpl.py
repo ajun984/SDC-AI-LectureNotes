@@ -24,10 +24,7 @@ class TransmitterRepositoryImpl(TransmitterRepository):
             cls.__instance = cls()
         return cls.__instance
 
-    def transmitCommand(self, clientSocketListObject):
-        clientSocketObject = clientSocketListObject[0]
-        clientSocket = clientSocketObject.getClientSocket()
-
+    def transmitCommand(self, clientSocket):
         while True:
             try:
                 print("transmitter: 응답 준비")
@@ -47,12 +44,12 @@ class TransmitterRepositoryImpl(TransmitterRepository):
 
             except socket.error as exception:
                 print(f"전송 중 에러 발생: str{exception}")
-                sleep(0.5)
 
             except Exception as exception:
                 print("원인을 알 수 없는 에러가 발생하였습니다")
 
-            sleep(2)
+            finally:
+                sleep(0.5)
 
     def getTransmitQueue(self):
         return self.__transmitQueue

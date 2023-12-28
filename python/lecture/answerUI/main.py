@@ -4,6 +4,7 @@ from time import sleep
 from decouple import config
 
 from account_form.repository.AccountFormRepositoryImpl import AccountFormRepositoryImpl
+from product_form.repository.ProductFormRepositoryImpl import ProductFormRepositoryImpl
 # pip3 install python-decouple
 
 from client_socket.repository.ClientSocketRepositoryImpl import ClientSocketRepositoryImpl
@@ -36,19 +37,64 @@ def initEachDomain():
     initServerSocketDomain()
     initTaskManageDomain()
     initConsolePrinterDomain()
+    
+    # initProductFormRepository()
 
 
 def registerProtocol():
     customProtocolService = CustomProtocolServiceImpl.getInstance()
     accountFormRepository = AccountFormRepositoryImpl.getInstance()
+    productFormRepository = ProductFormRepositoryImpl.getInstance()
 
     customProtocolService.registerCustomProtocol(
         CustomProtocol.ACCOUNT_REGISTER.value,
         accountFormRepository.createAccountRegisterForm
     )
 
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.ACCOUNT_LOGIN.value,
+        accountFormRepository.createAccountLoginForm
+    )
+
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.ACCOUNT_LOGOUT.value,
+        accountFormRepository.createAccountLogoutForm
+    )
+
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.ACCOUNT_DELETE.value,
+        accountFormRepository.createAccountDeleteForm
+    )
+
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_LIST.value,
+        productFormRepository.createProductListForm
+    )
+
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_REGISTER.value,
+        productFormRepository.createProductRegisterForm
+    )
+
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_READ.value,
+        productFormRepository.createProductReadForm
+    )
+
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_UPDATE.value,
+        productFormRepository.createProductUpdateForm
+    )
+
+    customProtocolService.registerCustomProtocol(
+        CustomProtocol.PRODUCT_DELETE.value,
+        productFormRepository.createProductDeleteForm
+    )
+
 
 if __name__ == '__main__':
+    print("\033[92m화면 출력 UI 서버가 구동되었습니다.")
+
     initEachDomain()
     registerProtocol()
 
